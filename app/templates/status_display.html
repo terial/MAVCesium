@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	    <meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	    <meta name="description" content="MAVCesium">
+	    <meta name="author" content="Samuel Dudley">
+	    <link rel='stylesheet' href="/static/DST/css/status_display.css">
+	    <link rel="icon" href="/static/DST/favicon-32x32.png" sizes="32x32" />
+	
+	    <title>Status</title>
+
+    </head>
+
+    <body>
+        <div class="parent">
+        {% for parent in status_fields['parents'] %}
+            <div class="inner">
+                <div class="holder1">
+                    <div class="lg_center" id ="{{parent['handle']}}">{{parent['display']|safe}}</div>
+                </div>
+                <div class="holder2">
+                {% for child in parent['children'] %}
+                    <div class="sml_holder">
+                        <div class="sml_center" id ="{{child['handle']}}">{{child['display']|safe}}</div>
+                    </div>
+                {% endfor %}
+                
+                </div>
+                <div class="holder3">
+                    <div class="console" id ="{{parent['handle']}}_console"></div>
+                </div> 
+            </div>
+        {% endfor %}
+        </div>
+		
+		<!-- Placed at the end of the document so the pages load faster -->
+        <script src="/static/DST/js/third_party/jquery-2.2.4.min.js"></script>
+        <script src="/static/DST/js/status_display.js"></script>
+        <script src="/static/DST/js/websocket.js"></script>
+    </body>
+</html>
