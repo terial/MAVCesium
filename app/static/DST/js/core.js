@@ -147,15 +147,19 @@ $(function () {
             aircraft.roll = data_stream.ATTITUDE.roll
             aircraft.pitch = data_stream.ATTITUDE.pitch
             aircraft.yaw = data_stream.ATTITUDE.yaw
-            aircraft.position = Cesium.Cartesian3.fromDegrees(aircraft.lon, aircraft.lat, aircraft.alt_wgs84);
             
             var position = Cesium.Cartesian3.fromDegrees(aircraft.lon, aircraft.lat, aircraft.alt_wgs84);
             var hpr = new Cesium.HeadingPitchRoll(aircraft.yaw+Math.PI/2, -aircraft.pitch, -aircraft.roll);
             var orientation = Cesium.Transforms.headingPitchRollQuaternion(position, hpr);
             entity.position = position;
             entity.orientation = orientation;
+            
+            aircraft.hpr = hpr
+            aircraft.orientation = orientation;
+            aircraft.position = position;
 	        
 	        draw_pos_target()
+//	        updateSensorFootprint() //image draping
 	        
 	        if (track_vehicle.value){
 	        	scene.screenSpaceCameraController.enableRotate = true;
@@ -670,6 +674,8 @@ document.onkeypress = function(evt) {
     	console.log('zoom +')
     } else if (charStr == "h") {
     	hud.show = !hud.show
+//    } else if (charStr == "c") {
+//    	updateStillCaptureSensorFootprint() // image draping 
     } else {
     	//do nothing
     }
